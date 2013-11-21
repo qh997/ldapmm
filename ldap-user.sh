@@ -18,22 +18,23 @@ function init {
 
 function ldap_read {
     ou=$1
+    cn=$2
     ldapsearch -h "${server}" \
                -D "cn=${account}, ou=people, dc=${dc}, dc=internal" \
                -w "${password}" \
-               -b "cn=${user_name},ou=${ou},dc=${dc},dc=internal"
+               -b "cn=${cn},ou=${ou},dc=${dc},dc=internal"
 }
 
 function ldap_user {
-    ldap_read 'people'
+    ldap_read 'people' ${user_name}
 }
 
 init $@
 
-user_universe=$(ldap_user)
-
 OLD_IFS=$IFS
 IFS=$(echo -en "\n")
+
+user_universe=$(ldap_user)
 
 if [ ${verbose} ]; then
     echo ${user_universe}
