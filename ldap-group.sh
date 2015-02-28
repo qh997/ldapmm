@@ -40,6 +40,8 @@ function user_attr {
     printf "%-17s %s\n" "${acct}" "${value}"
 }
 
+#sudo route add 202.107.117.23 gw 10.1.10.254
+
 init $@
 
 OLD_IFS=$IFS
@@ -71,3 +73,5 @@ else
 fi
 
 IFS=${OLD_IFS}
+
+#sudo route del 202.107.117.23 gw 10.1.10.254

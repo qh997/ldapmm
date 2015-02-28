@@ -29,6 +29,8 @@ function ldap_user {
     ldap_read 'people' ${user_name}
 }
 
+#sudo route add 202.107.117.23 gw 10.1.42.1
+
 init $@
 
 OLD_IFS=$IFS
@@ -39,7 +41,7 @@ user_universe=$(ldap_user)
 if [ ${verbose} ]; then
     echo ${user_universe}
 elif [ ${manager} ]; then
-    echo ${user_universe} | sed -n 's/managedObjects: //p' \
+    echo ${user_universe} | sed -n 's/.*managedObjects.*: //ip' \
                           | awk -F',' '{print $1}' \
                           | awk -F'=' '{print $2}' \
                           | sort
@@ -51,3 +53,5 @@ else
 fi
 
 IFS=${OLD_IFS}
+
+#sudo route del 202.107.117.23 gw 10.1.10.254
